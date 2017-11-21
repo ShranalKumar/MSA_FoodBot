@@ -16,7 +16,15 @@ var connector = new builder.ChatConnector({
 // Listen for messages from users 
 server.post('/api/messages', connector.listen());
 
+var lastSaid = "";
+
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, function(session) {
-    session.send("You said: %s", session.message.text);
+
+    if (lastSaid == session.message.text) {
+        session.send("You said that already!");
+    } else {
+        session.send("You said: %s", session.message.text);
+    }
+    lastSaid = session.message.text;
 });
