@@ -50,6 +50,5 @@ function handleFavouriteFoodResponse(message, session, username) {
 }
 
 function handleDeletedFoodResponse(body, session, username, favouriteFood) {
-    session.send("done");
     console.log('Done');
 }

@@ -55,13 +55,24 @@ exports.deleteFavouriteFood = function deleteData(url, session, username, favour
 
 };
 
-exports.getYelpData = function getData(url, bearer, session, callback) {
+exports.getYelpData = function getRestaurant(url, bearer, session, callback) {
 
     request.get(url, { 'auth': { 'bearer': bearer } }, function(err, res, body) {
         if (err) {
             console.log(err);
         } else {
             callback(body, session);
+        }
+    });
+};
+
+exports.getNutritionData = function getNutrition(url, session, foodName, callback) {
+
+    request.get(url, function processGetRequest(err, res, body) {
+        if (err) {
+            console.log(err);
+        } else {
+            callback(body, foodName, session);
         }
     });
 };
