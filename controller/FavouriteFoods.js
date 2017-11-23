@@ -17,7 +17,7 @@ exports.deleteFavouriteFood = function deleteFavouriteFood(session, username, fa
         var allFoods = JSON.parse(message);
 
         for (var i in allFoods) {
-            if (allFoods[i].favouriteFood === favouriteFood && allFoods[i].username === username) {
+            if (allFoods[i].favouriteFood == favouriteFood && allFoods[i].username == username) {
                 console.log(allFoods[i]);
                 rest.deleteFavouriteFood(url, session, username, favouriteFood, allFoods[i].id, handleDeletedFoodResponse)
             }
@@ -26,6 +26,7 @@ exports.deleteFavouriteFood = function deleteFavouriteFood(session, username, fa
 };
 
 function handleFavouriteFoodResponse(message, session, username) {
+    console.log(message);
     var favouriteFoodResponse = JSON.parse(message);
     var allFoods = [];
     for (var index in favouriteFoodResponse) {
@@ -49,5 +50,6 @@ function handleFavouriteFoodResponse(message, session, username) {
 }
 
 function handleDeletedFoodResponse(body, session, username, favouriteFood) {
+    session.send("done");
     console.log('Done');
 }

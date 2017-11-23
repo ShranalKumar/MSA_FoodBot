@@ -1,5 +1,6 @@
 var builder = require('botbuilder');
 var food = require("./FavouriteFoods");
+var restaurant = require('./RestaurantCard');
 
 exports.startDialog = function(bot) {
     var recognizer = new builder.LuisRecognizer('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/e8413459-4ba3-4dbf-b41f-f98e34159da4?subscription-key=d1c174e41a47422aa30e74c7f2429503&verbose=true&timezoneOffset=0&q='); +
@@ -10,10 +11,10 @@ exports.startDialog = function(bot) {
         // Pulls out the food entity from the session if it exists
         var foodEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Food');
 
-        // Checks if the food entity was found
+        // Checks if the for entity was found
         if (foodEntity) {
             session.send('Looking for restaurants which sell %s...', foodEntity.entity);
-            // Insert logic here later
+            restaurant.displayRestaurantCards(foodEntity.entity, "auckland", session);
         } else {
             session.send("No food identified! Please try again");
         }
@@ -31,16 +32,19 @@ exports.startDialog = function(bot) {
             }
         },
         function(session, results, next) {
-
+            if (results.response) {
+                session.conversationData["username"] = results.response;
+            }
             session.send("You want to delete one of your favourite foods.");
 
             // Pulls out the food entity from the session if it exists
-            var foodEntity = builder.EntityRecognizer.findEntity(session.dialogData.args.intent.entities, 'food');
+            var foodEntity = builder.EntityRecognizer.findEntity(session.dialogData.args.intent.entities, 'Food');
 
             // Checks if the for entity was found
             if (foodEntity) {
                 session.send('Deleting \'%s\'...', foodEntity.entity);
                 food.deleteFavouriteFood(session, session.conversationData['username'], foodEntity.entity); //<--- CALLL WE WANT
+                session.send('\'%s\' deleted', foodEntity.entity);
             } else {
                 session.send("No food identified! Please try again");
             }
@@ -71,10 +75,12 @@ exports.startDialog = function(bot) {
             session.dialogData.args = args || {};
             if (!session.conversationData["username"]) {
                 builder.Prompts.text(session, "Enter a username to setup your account.");
+            } else {
+                next();
             }
         },
         function(session, results, next) {
-
+            console.log(results);
             if (results.response) {
                 session.conversationData["username"] = results.response;
             }
