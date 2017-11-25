@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>MSA Food Bot</title>
+
+    <link href="style.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function openChat() {
+            var image = document.getElementById("chatbutton");
+            image.className = "hide";
+
+            var frame = document.getElementById("chatframe");
+            frame.className = "";
+
+        }
+
+        function closeChat() {
+            var image = document.getElementById("chatbutton");
+            image.className = "";
+
+            var frame = document.getElementById("chatframe");
+            frame.className = "hide";
+
+        }
+    </script>
+</head>
+<body>
+    <div id="titleBlock">
+        <img id="logo" src="images/msp_logo.PNG" />
+        <h1 id="heading">MSA Food Bot 2017</h1>
+    </div>
+
+    <div id="content">
+        <div id="left-content">
+            <p>
+                1. Ensure bot is on GitHub<br />
+                2. Create "Web App" on Azure<br />
+                3. Select "Deployment Options"<br />
+                4. Select "GitHub" as source<br />
+                5. You may need to do the authentification stuff<br />
+                6. Select your GitHub repo and a branch<br />
+                7. Show off the continuous deployment<br />
+                8. Press "ok"<br />
+                9. Go to https://ngrok.com/downloads<br />
+                10. Download correct version for you
+                11. Open bot emulator
+                12. Click 3 dots on top right<br />
+                13. "App Settings"<br />
+                14. Browse and select the downloaded "ngrok.exe"<br />
+                15. Copy URL to the Azure web app and add "/api/messages"<br />
+                16. Try It!
+            </p>
+        </div>
+        <div id="right-content">
+            <img src="images/vs.PNG" />
+            <img src="images/botframework.PNG"
+        </div>
+    </div>
+
+    <div id="chat">
+        <img id="chatbutton" src="images/chatico.PNG" onclick="openChat()" />
+        <div id="chatframe" class="hide">
+            <iframe src='https://webchat.botframework.com/embed/foodbotshranal?s=dUM3N-RLohE.cwA.qsU.TRltMn0XwQGsvRd2RY-ZDJnCDM1vYEi9WzC2oIZfai0'></iframe>
+            <button onclick="closeChat()">Hide</button>
+        </div>
+    </div>
+</body>
+</html>
